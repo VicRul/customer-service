@@ -1,6 +1,6 @@
 package org.vicrul.customerservice.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,10 +25,10 @@ public class Address {
 	private String street;
 	private String house;
 	private String flat;
-	private LocalDate created;
-	private LocalDate modified;
+	private LocalDateTime created;
+	private LocalDateTime modified;
 
-	public Address(String contry, String region, String city, String street, String house, String flat, LocalDate created, LocalDate modified) {
+	public Address(String contry, String region, String city, String street, String house, String flat, LocalDateTime created, LocalDateTime modified) {
 		this.contry = contry;
 		this.region = region;
 		this.city = city;
