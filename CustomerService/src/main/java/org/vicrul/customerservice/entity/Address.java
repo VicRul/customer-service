@@ -13,7 +13,6 @@ import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
 public class Address {
 
 	@Id
