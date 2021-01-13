@@ -18,14 +18,31 @@ public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
 	private long id;
+	
+	@Getter @Setter
 	private String contry;
+	
+	@Getter @Setter
 	private String region;
+	
+	@Getter @Setter
 	private String city;
+	
+	@Getter @Setter
 	private String street;
+	
+	@Getter @Setter
 	private String house;
+	
+	@Getter @Setter
 	private String flat;
+	
+	@Getter @Setter
 	private LocalDateTime created;
+	
+	@Getter @Setter
 	private LocalDateTime modified;
 
 	public Address(String contry, String region, String city, String street, String house, String flat, LocalDateTime created, LocalDateTime modified) {
@@ -36,5 +53,6 @@ public class Address {
 		this.house = house;
 		this.flat = flat;
 		this.created = created;
-		this.modified = modified;	}
+		this.modified = modified;	
+	}
 }
