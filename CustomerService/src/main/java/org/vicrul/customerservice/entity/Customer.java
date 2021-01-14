@@ -35,12 +35,12 @@ public class Customer {
 	@Getter @Setter
 	private String sex;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "registred_address_id", nullable = false)
 	@Getter @Setter
 	private Address registredAddress;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "actual_address_id", nullable = false)
 	@Getter @Setter
 	private Address actualAddress;
