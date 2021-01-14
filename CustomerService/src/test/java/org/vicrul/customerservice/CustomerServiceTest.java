@@ -1,5 +1,7 @@
 package org.vicrul.customerservice;
 
+import static org.junit.Assert.*;
+
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.vicrul.customerservice.entity.Address;
 import org.vicrul.customerservice.entity.Customer;
+import org.vicrul.customerservice.exception.AddressFieldException;
+import org.vicrul.customerservice.exception.SexFieldException;
 import org.vicrul.customerservice.repository.AddressRepository;
 import org.vicrul.customerservice.repository.CustomerRepository;
 import org.vicrul.customerservice.service.CustomerService;
@@ -49,5 +53,49 @@ public class CustomerServiceTest {
 		Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
 		Mockito.verify(addressRepository, Mockito.times(1)).save(registeredAddress);
 		Mockito.verify(addressRepository, Mockito.times(1)).save(actualAddress);
+	}
+	
+	@Test
+	public void shouldThrowSexFieldException() {
+		LocalDateTime date = LocalDateTime.now();
+		Address address = new Address("Russia", "NSK", "Novosibirsk", "Lenina", "2", "21", date, date);
+		Customer customer = new Customer("Petr", "Petrov", "Petrovich", "CBHSJACB", address, address);
+		
+		assertThrows(SexFieldException.class, () -> {
+			customerService.saveCustomer(customer, false);
+		});
+	}
+	
+	@Test
+	public void shouldThrowSexFieldExceptionWithNullSexField() {
+		LocalDateTime date = LocalDateTime.now();
+		Address address = new Address("Russia", "NSK", "Novosibirsk", "Lenina", "2", "21", date, date);
+		Customer customer = new Customer("Petr", "Petrov", "Petrovich", null, address, address);
+		
+		assertThrows(SexFieldException.class, () -> {
+			customerService.saveCustomer(customer, false);
+		});
+	}
+	
+	@Test
+	public void shouldThrowSexFieldExceptionWithEmptySexField() {
+		LocalDateTime date = LocalDateTime.now();
+		Address address = new Address("Russia", "NSK", "Novosibirsk", "Lenina", "2", "21", date, date);
+		Customer customer = new Customer("Petr", "Petrov", "Petrovich", "", address, address);
+		
+		assertThrows(SexFieldException.class, () -> {
+			customerService.saveCustomer(customer, false);
+		});
+	}
+	
+	@Test
+	public void shouldThrowAddressFieldException() {
+		LocalDateTime date = LocalDateTime.now();
+		Address address = new Address("Russia", "NSK", "Novosibirsk", "Lenina", "2", "21", date, date);
+		Customer customer = new Customer("Petr", "Petrov", "Petrovich", "male", null, address);
+		
+		assertThrows(AddressFieldException.class, () -> {
+			customerService.saveCustomer(customer, false);
+		});
 	}
 }
