@@ -26,8 +26,8 @@ public class RepositoryTest {
 
 	@Test
 	public void shouldUpdateActualAddress() {
-		Address address = addressRepository.findById(1L).get();
-		assertEquals(customerRepository.updateActualAddress(2L, address), 1);
+		Address address = addressRepository.findById(95L).get();
+		assertEquals(customerRepository.updateActualAddress(96L, address), 1);
 	}
 	
 	@Test
