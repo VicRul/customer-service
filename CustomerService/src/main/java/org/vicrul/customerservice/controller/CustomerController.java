@@ -36,7 +36,7 @@ public class CustomerController {
 	@PostMapping("/new")
 	public ResponseEntity<Customer> createNewCustomer(
 				@RequestBody Customer customer, 
-				@RequestParam(value = "isSameAddresses", required = false, defaultValue = "true") boolean isSameAddresses)
+				@RequestParam(value = "isSameAddresses") boolean isSameAddresses)
 	{
 		
 		Customer savedCustomer = customerService.saveCustomer(customer, isSameAddresses);
