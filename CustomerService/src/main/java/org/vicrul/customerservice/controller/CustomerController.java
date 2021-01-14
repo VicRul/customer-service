@@ -29,14 +29,14 @@ public class CustomerController {
 			@RequestParam(value = "firstName") String firstName,
 			@RequestParam(value = "lastName") String lastName)
 	{
-		System.out.println(firstName + " " + lastName);
+		
 		return customerService.findByFirstNameAndLastName(firstName, lastName);
 	}
 	
 	@PostMapping("/new")
 	public ResponseEntity<Customer> createNewCustomer(
 				@RequestBody Customer customer, 
-				@RequestParam(value = "isSameAddresses") boolean isSameAddresses)
+				@RequestParam(value = "isSameAddresses", required = false, defaultValue = "true") boolean isSameAddresses)
 	{
 		
 		Customer savedCustomer = customerService.saveCustomer(customer, isSameAddresses);
@@ -45,15 +45,12 @@ public class CustomerController {
 
 	@PutMapping("/update")
 	public ResponseEntity updateActualAddres(
-				@RequestParam(value = "customerId", required = false, defaultValue = "1") String customerId,
+				@RequestParam(value = "customerId") String customerId,
 				@RequestBody Address newActualAddress
 			) 
 	{
 		
-		boolean result = customerService.updateActualAddress(Long.parseLong(customerId), newActualAddress);
-		if (!result) {
-			return ResponseEntity.badRequest().build();
-		}
+		customerService.updateActualAddress(Long.parseLong(customerId), newActualAddress);
 		return ResponseEntity.ok().build();
 	}	
 }

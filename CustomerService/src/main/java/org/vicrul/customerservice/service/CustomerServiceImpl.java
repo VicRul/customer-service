@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.vicrul.customerservice.entity.Address;
 import org.vicrul.customerservice.entity.Customer;
 import org.vicrul.customerservice.exception.AddressFieldException;
+import org.vicrul.customerservice.exception.EmptyRequestParamsException;
 import org.vicrul.customerservice.exception.SexFieldException;
 import org.vicrul.customerservice.repository.AddressRepository;
 import org.vicrul.customerservice.repository.CustomerRepository;
@@ -51,13 +52,21 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Customer> findByFirstNameAndLastName(String firstName, String lastName) {
 		
+		if (firstName == null || lastName == null)
+			throw new EmptyRequestParamsException();
+		
 		List<Customer> foundedCustomers = customerRepository.findByFirstNameAndLastName(firstName, lastName);
 		return (foundedCustomers.size() > 0) ? foundedCustomers : Collections.emptyList() ;
 	}
 
 	@Override
 	public boolean updateActualAddress(long customerId, Address newActualAddress) {
-		return customerRepository.updateActualAddress(customerId, newActualAddress) == 1;
+		
+		if (newActualAddress == null)
+			throw new EmptyRequestParamsException();
+		
+		Address newSavedAddress = addressRepository.save(newActualAddress);
+		return customerRepository.updateActualAddress(customerId, newSavedAddress) == 1;
 	}
 
 }
