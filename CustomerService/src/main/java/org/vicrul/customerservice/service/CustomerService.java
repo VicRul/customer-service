@@ -9,5 +9,5 @@ public interface CustomerService {
 
 	Customer saveCustomer(Customer newCustomer, boolean actualAddresIsRegisteredAddress);
 	List<Customer> findByFirstNameAndLastName(String firstName, String lastName);
-	Customer updateActualAddress(long customerId, Address newActualAddress);
+	boolean updateActualAddress(long customerId, Address newActualAddress);
 }

@@ -1,5 +1,6 @@
 package org.vicrul.customerservice.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -22,15 +23,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer saveCustomer(Customer newCustomer, boolean actualAddresIsRegisteredAddress) {
 
-		if (newCustomer.getSex().equals(null) || newCustomer.getSex().isEmpty())
+		if (newCustomer.getSex() == null || newCustomer.getSex().isEmpty())
 			throw new SexFieldException();
 		
-		String sex = newCustomer.getSex();
-		
-		if (!(sex.equals("male")) && !(sex.equals("female")))
+		if (!(newCustomer.getSex().equals("male")) && !(newCustomer.getSex().equals("female")))
 			throw new SexFieldException();
 		
-		if (newCustomer.getActualAddress().equals(null) || newCustomer.getRegistredAddress().equals(null))
+		if (newCustomer.getActualAddress() == null || newCustomer.getRegistredAddress() == null)
 			throw new AddressFieldException();
 		
 		Address actualAddress = null;
@@ -51,12 +50,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<Customer> findByFirstNameAndLastName(String firstName, String lastName) {
-		return null;
+		
+		List<Customer> foundedCustomers = customerRepository.findByFirstNameAndLastName(firstName, lastName);
+		return (foundedCustomers.size() > 0) ? foundedCustomers : Collections.emptyList() ;
 	}
 
 	@Override
-	public Customer updateActualAddress(long customerId, Address newActualAddress) {
-		return null;
+	public boolean updateActualAddress(long customerId, Address newActualAddress) {
+		return customerRepository.updateActualAddress(customerId, newActualAddress) == 1;
 	}
 
 }
