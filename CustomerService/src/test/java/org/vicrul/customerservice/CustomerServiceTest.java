@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.vicrul.customerservice.entity.Address;
 import org.vicrul.customerservice.entity.Customer;
 import org.vicrul.customerservice.exception.AddressFieldException;
+import org.vicrul.customerservice.exception.EmptyRequestParamsException;
 import org.vicrul.customerservice.exception.SexFieldException;
 import org.vicrul.customerservice.repository.AddressRepository;
 import org.vicrul.customerservice.repository.CustomerRepository;
@@ -85,6 +86,13 @@ public class CustomerServiceTest {
 		
 		assertThrows(SexFieldException.class, () -> {
 			customerService.saveCustomer(customer, false);
+		});
+	}
+	
+	@Test
+	public void shouldThrowEmptyRequestParamsFieldException() {		
+		assertThrows(EmptyRequestParamsException.class, () -> {
+			customerService.findByFirstNameAndLastName(null, "vsdvs");
 		});
 	}
 	
