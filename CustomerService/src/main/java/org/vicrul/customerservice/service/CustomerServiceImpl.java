@@ -22,11 +22,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer saveCustomer(Customer newCustomer, boolean actualAddresIsRegisteredAddress) {
 
-		// TODO: Проверить исключения
 		if (newCustomer.getSex().equals(null) || newCustomer.getSex().isEmpty())
 			throw new SexFieldException();
 		
-		if (!newCustomer.getSex().equals("male") || !newCustomer.getSex().equals("female"))
+		String sex = newCustomer.getSex();
+		
+		if (!(sex.equals("male")) && !(sex.equals("female")))
 			throw new SexFieldException();
 		
 		if (newCustomer.getActualAddress().equals(null) || newCustomer.getRegistredAddress().equals(null))
