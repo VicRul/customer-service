@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.vicrul.customerservice.entity.Address;
-import org.vicrul.customerservice.entity.Customer;
+import org.vicrul.customerservice.model.entity.Address;
+import org.vicrul.customerservice.model.entity.Customer;
 import org.vicrul.customerservice.repository.AddressRepository;
 import org.vicrul.customerservice.repository.CustomerRepository;
+
+import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -25,6 +27,7 @@ public class RepositoryTest {
 	AddressRepository addressRepository;
 
 	@Test
+	@Transactional
 	public void shouldUpdateActualAddress() {
 		Address address = addressRepository.findById(95L).get();
 		assertEquals(customerRepository.updateActualAddress(96L, address), 1);

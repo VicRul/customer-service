@@ -14,8 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.vicrul.customerservice.entity.Address;
-import org.vicrul.customerservice.entity.Customer;
+import org.vicrul.customerservice.model.entity.Address;
+import org.vicrul.customerservice.model.entity.Customer;
 
 import com.google.gson.Gson;
 
@@ -38,7 +38,7 @@ public class CustomerControllerTest {
         
         String customerInJson = new Gson().toJson(customer);
         mockMvc
-        	.perform(post("http://localhost:8080/api/new")
+        	.perform(post("http://localhost:8080/api/customers/new")
         		.param("isSameAddresses", "false")
         		.contentType(MediaType.APPLICATION_JSON).content(customerInJson))
         	.andDo(print())
@@ -54,7 +54,7 @@ public class CustomerControllerTest {
         
         String customerInJson = new Gson().toJson(customer);
         mockMvc
-        	.perform(post("http://localhost:8080/api/new")
+        	.perform(post("http://localhost:8080/api/customers/new")
         			.param("isSameAddresses", "false")
         			.contentType(MediaType.APPLICATION_JSON).content(customerInJson))
         	.andDo(print())
@@ -64,7 +64,7 @@ public class CustomerControllerTest {
 	@Test
 	void shouldFindCustomer() throws Exception {
 		mockMvc
-	    	.perform(get("http://localhost:8080/api/find")
+	    	.perform(get("http://localhost:8080/api/customers/find")
 	    			.param("firstName", "Ivan")
 	    			.param("lastName", "Ivanov"))
 	    	.andDo(print())
@@ -74,7 +74,7 @@ public class CustomerControllerTest {
 	@Test
 	void shouldNotFindCustomer() throws Exception {
 		mockMvc
-    		.perform(get("http://localhost:8080/api/find")
+    		.perform(get("http://localhost:8080/api/customers/find")
     				.param("firstName", "Ivanscs"))
     		.andDo(print())
     		.andExpect(status().isBadRequest());
@@ -86,7 +86,7 @@ public class CustomerControllerTest {
 		String addressInJson = new Gson().toJson(address);
 		
 		mockMvc
-			.perform(put("http://localhost:8080/api/update")
+			.perform(put("http://localhost:8080/api/customers/update")
 					.param("customerId", "95")
 					.contentType(MediaType.APPLICATION_JSON).content(addressInJson))
 			.andDo(print())
@@ -97,7 +97,7 @@ public class CustomerControllerTest {
 	void shouldNotUpdateActualAddres() throws Exception {
 		
 		mockMvc
-			.perform(put("http://localhost:8080/api/update")
+			.perform(put("http://localhost:8080/api/customers/update")
 					.param("customerId", "95"))
 			.andDo(print())
 			.andExpect(status().isBadRequest());

@@ -1,4 +1,4 @@
-package org.vicrul.customerservice.entity;
+package org.vicrul.customerservice.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
