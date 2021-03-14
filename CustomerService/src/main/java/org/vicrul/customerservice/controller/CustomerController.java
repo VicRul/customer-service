@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.vicrul.customerservice.entity.Address;
-import org.vicrul.customerservice.entity.Customer;
+import org.vicrul.customerservice.model.entity.Address;
+import org.vicrul.customerservice.model.entity.Customer;
 import org.vicrul.customerservice.service.CustomerService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/customers")
 @AllArgsConstructor
 public class CustomerController {
 	
@@ -31,6 +31,12 @@ public class CustomerController {
 	{
 		
 		return customerService.findByFirstNameAndLastName(firstName, lastName);
+	}
+
+	@GetMapping("/find_all")
+	public List<Customer> findAllCustomers() {
+
+		return customerService.findAllCustomers();
 	}
 	
 	@PostMapping("/new")
