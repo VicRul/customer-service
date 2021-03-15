@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.vicrul.customerservice.entity.Address;
-import org.vicrul.customerservice.entity.Customer;
+import org.vicrul.customerservice.model.entity.Address;
+import org.vicrul.customerservice.model.entity.Customer;
 import org.vicrul.customerservice.exception.AddressFieldException;
 import org.vicrul.customerservice.exception.EmptyRequestParamsException;
 import org.vicrul.customerservice.exception.SexFieldException;
@@ -36,9 +36,9 @@ public class CustomerServiceTest {
 		Customer customer = new Customer("Petr", "Petrov", "Petrovich", "male", address, address);
 		
 		customerService.saveCustomer(customer, true);
-		
-		Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
+
 		Mockito.verify(addressRepository, Mockito.times(1)).save(address);
+		Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
 	}
 	
 	@Test
